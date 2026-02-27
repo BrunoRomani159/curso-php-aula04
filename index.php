@@ -53,8 +53,9 @@
             // Regra 3: Se for maior ou igual a 18 E o bilhete for "pista", exibir ACESSO PISTA LIBERADO.
 
             // Escreva o seu código abaixo:
-
-
+          if ($idade <18) {echo 'ACESSO NEGADO';}
+          else if (($idade >= 18) && ($bilhete == 'vip')) {echo 'ACESSO VIP AUTORIZADO';}
+          else { echo 'ACESSO PISTA LIBERADO';}
 
           }
           ?>
