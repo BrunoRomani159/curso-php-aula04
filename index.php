@@ -3,13 +3,13 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CodeForce - Controlo de Acesso</title>
+  <title>CodeForce - Sistema de Bilheteria</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body class="bg-light">
   <div class="container mt-5">
-    <h2 class="mb-4 text-center">🎫 Sistema de Controlo de Acesso</h2>
+    <h2 class="mb-4 text-center">🎫 Sistema de Bilheteria</h2>
 
     <div class="row justify-content-center">
       <div class="col-md-6">
@@ -27,6 +27,10 @@
                   <option value="vip">VIP</option>
                   <option value="camarote">Camarote VIP+</option>
                 </select>
+              </div>
+              <div class="mb-3">
+                <label class="form-label">Quantidade de Bilhetes (máx 10)</label>
+                <input type="number" class="form-control" name="quantidade" value="1" min="1" max="10" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Cupom vip</label>
@@ -49,6 +53,7 @@
             // 1. RECOLHA DE DADOS (O "Input" do utilizador)
             $idade = $_POST['idadeUsuario'];
             $bilhete = $_POST['tipoBilhete'];
+            $quantidadeDesejada = (int)$_POST['quantidade'];
             $cupom = $_POST['cupomvip'];
 
             echo "<h4>Resultado da Validação:</h4>";
@@ -60,9 +65,9 @@
 
             // Escreva o seu código abaixo:
           if ($idade <18) {echo 'ACESSO NEGADO';}
-          /*else if (($idade >= 18) && ($bilhete == 'vip' || $cupom == 'bomfidjfbnf')) {echo 'ACESSO VIP AUTORIZADO';}
-          else { echo 'ACESSO PISTA LIBERADO';}*/
-          else {switch($bilhete) {
+          
+
+          else {/* {switch($bilhete) {
             case 'camarote':
               echo "Acesso Camarote Liberado";
               break;
@@ -75,12 +80,38 @@
               if ($cupom == 'bomfidjfbnf') {echo "Acesso VIP Liberado";}
                 else if ($cupom !=='vip') {echo "cupom invalido";}
                 else {echo "Pista Liberada";}
-                break;
+                break; */
+              $nomeSetor = '';
 
-            default: echo "BilheteInvalido";
-              break;}
-          } 
+                 switch($bilhete) {
+            case 'camarote':
+              $nomeSetor = 'Camarote VIP';
+              break;
 
+            case 'pista':
+              if ($cupom === 'JUMPERVIP') {
+                $nomeSetor = 'pista (UPGRADE VIP)';
+              }
+                else {
+                  $nomeSetor = 'Pista Padrão';
+                }
+                break;}
+          
+          echo "<h5>Imprimindo {$quantidadeDesejada} bilhete(s) para: {$nomeSetor}</h5>";
+          echo '<ul class="list-group mb-3 shadow-sm">';
+
+           $bilheteAtual = 1;
+
+          while ($bilheteAtual <= $quantidadeDesejada) {
+            echo "<li class='list-group-item'>";
+            echo "🎫 Bilhete #{$bilheteAtual} (cód: " . rand(1000, 9999) . ")";
+            echo "</li>";
+
+            $bilheteAtual++;
+          }
+          echo '</ul>';
+          echo '<div class="alert alert-success fw-bold"> ✔ Lote gerado com sucesso!</div>';
+          }
           }
           ?>
         </div>
