@@ -30,7 +30,7 @@
               </div>
               <div class="mb-3">
                 <label class="form-label">Quantidade de Bilhetes (máx 10)</label>
-                <input type="number" class="form-control" name="quantidade" value="1" min="1" max="10" required>
+                <input type="number" class="form-control" name="quantidade" value="1" min="1" max="1000" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Cupom vip</label>
@@ -84,8 +84,14 @@
               $nomeSetor = '';
 
                  switch($bilhete) {
+
             case 'camarote':
               $nomeSetor = 'Camarote VIP';
+              break;
+
+
+            case 'vip':
+              $nomeSetor = 'VIP';
               break;
 
             case 'pista':
@@ -100,7 +106,7 @@
           echo "<h5>Imprimindo {$quantidadeDesejada} bilhete(s) para: {$nomeSetor}</h5>";
           echo '<ul class="list-group mb-3 shadow-sm">';
 
-           $bilheteAtual = 1;
+          /* $bilheteAtual = 1;
 
           while ($bilheteAtual <= $quantidadeDesejada) {
             echo "<li class='list-group-item'>";
@@ -108,8 +114,71 @@
             echo "</li>";
 
             $bilheteAtual++;
+          }*/
+
+          for ($bilheteAtual = 1; $bilheteAtual <= $quantidadeDesejada; $bilheteAtual++) {
+
+            if ($bilheteAtual > 10) {
+              echo "<div class='alert alert-danger mt-2'> ☣ Limite de segurança! Impressão abortada. </div>";
+              break;
+            }
+
+            if($bilheteAtual == 3) {
+              echo "<li class='list-group-item list-group-item-warning'>💥 Bilhete #3 amassado. Pulando...</li>";
+              continue;
+            }
+            echo "<li class = 'list-group=item d-flex justify-content-between aling-items-center'>";
+            echo "🎫 Bilhete #{$bilheteAtual} <small class='text-muted'> (cód: " . rand(1000, 9999) . ") </small>";
+            echo "<span class = 'badge bg-sucess rounded-pill'> Impresso </span>";
           }
           echo '</ul>';
+
+
+
+          if($bilhete === 'vip') {
+            echo ",<h5 class='mt-4'> 🎁 KIT VIP Liberado</h5>";
+
+            $brindes = ["Copo Neon","Pulseira de Pano","Vale Drink VIP","Acesso ao backstage"];
+
+            echo "<ul class='list-group mb-3 shadow-sm'>";
+
+          foreach ($brindes as $item) {
+            echo "<li class='list-group-item-info'> 🎇 Você ganhou : {$item}</li>";
+          }
+          echo "</ul>";
+          }
+
+
+
+          if($cupom === 'JUMPERVIP') {
+            echo ",<h5 class='mt-4'> 🎁 KIT VIP Liberado</h5>";
+
+            $brindes = ["Copo Neon","Pulseira de Pano","Vale Drink VIP","Acesso ao backstage"];
+
+            echo "<ul class='list-group mb-3 shadow-sm'>";
+
+          foreach ($brindes as $item) {
+            echo "<li class='list-group-item-info'> 🎇 Você ganhou : {$item}</li>";
+          }
+          echo "</ul>";
+          }
+
+
+          if($bilhete == 'camarote') {
+            echo ",<h5 class='mt-4'> 🎁 KIT Camarote VIP Liberado</h5>";
+
+            $brindecamarote = ["Copo Neon","Pulseira de Led","Vale Drink com gelo personalizado","Acesso ao backstage","Oculos com Led"];
+
+            echo "<ul class='list-group mb-3 shadow-sm'>";
+
+          foreach ($brindecamarote as $item) {
+            echo "<li class='list-group-item-info'> 🎇 Você ganhou : {$item}</li>";
+          }
+          echo "</ul>";
+          }
+
+
+          
           echo '<div class="alert alert-success fw-bold"> ✔ Lote gerado com sucesso!</div>';
           }
           }
